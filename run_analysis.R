@@ -101,14 +101,14 @@ runIt <- function() {
   
   # add the subject data to the data
   tmp3 <- personifyRecords(tmp2)
-  write.table(x=tmp3,file="RESULT_unsummarized.txt")
+  write.csv(x=tmp3,file="RESULT_unsummarized.txt",quote=FALSE,row.names=FALSE)
   
   # finally summarize the data and output
   summarizedData <- summarizeIt(tmp3)
-  write.table(x=summarizedData,file="RESULT_summarized.txt")
+  write.csv(x=summarizedData,file="RESULT_summarized.txt",quote=FALSE,row.names=FALSE)
   
   summarizedCrosstab <- dcast(summarizedData, Subject+Activity ~ variable, sum,drop=TRUE,value.var="Mean")
-  write.table(x=summarizedData,file="RESULT_summarized_xtab.txt")  
+  write.csv(x=summarizedData,file="RESULT_summarized_xtab.txt",quote=FALSE,row.names=FALSE)  
   
   print("RESULT_unsummarized.txt, RESULT_summarized.txt and RESULT_summarized_xtab.txt files are created")
 }

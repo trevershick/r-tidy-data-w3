@@ -19,6 +19,6 @@ Running the R Script
 from the command line :
 
 ```
-Rscript run_analysis.R_
+Rscript run_analysis.R
 ```
 

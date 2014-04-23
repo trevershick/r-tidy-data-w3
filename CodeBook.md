@@ -1,4 +1,4 @@
-Datafile: RESULT_summarized.txt - Summarized Wearable Computer Movement Data, .csv format
+*Datafile: RESULT_summarized.txt* - Summarized Wearable Computer Movement Data, .csv format
 
 1. Subject - the participant id, integer value
 2. Activity - the activity being performed during measurement (6 values)

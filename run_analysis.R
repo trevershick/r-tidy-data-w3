@@ -86,25 +86,31 @@ summarizeIt <- function(data) {
   ddply(mdata, .(Subject,Activity,variable), summarize, Mean=mean(value))
 }
 
-# download if they're not there
-downloadAndExtract()
+runIt <- function() {
+  # download if they're not there
+  downloadAndExtract()
+  
+  # merge all x,y and subject files together (union them)
+  mergeFiles()
+  
+  # pull out the stddev and mean columns
+  tmp1 <- extractMeanAndStdDevs()
+  
+  # add the activity labels
+  tmp2 <- labelRecords(tmp1)
+  
+  # add the subject data to the data
+  tmp3 <- personifyRecords(tmp2)
+  write.table(x=tmp3,file="RESULT_unsummarized.txt")
+  
+  # finally summarize the data and output
+  summarizedData <- summarizeIt(tmp3)
+  write.table(x=summarizedData,file="RESULT_summarized.txt")
+  
+  summarizedCrosstab <- dcast(summarizedData, Subject+Activity ~ variable, sum,drop=TRUE,value.var="Mean")
+  write.table(x=summarizedData,file="RESULT_summarized_xtab.txt")  
+  
+  print("RESULT_unsummarized.txt, RESULT_summarized.txt and RESULT_summarized_xtab.txt files are created")
+}
 
-# merge all x,y and subject files together (union them)
-mergeFiles()
-
-# pull out the stddev and mean columns
-tmp1 <- extractMeanAndStdDevs()
-
-# add the activity labels
-tmp2 <- labelRecords(tmp1)
-
-# add the subject data to the data
-tmp3 <- personifyRecords(tmp2)
-write.table(x=tmp3,file="RESULT_unsummarized.txt")
-
-# finally summarize the data and output
-summarizedData <- summarizeIt(tmp3)
-write.table(x=summarizedData,file="RESULT_summarized.txt")
-
-summarizedCrosstab <- dcast(summarizedData, Subject+Activity ~ variable, sum,drop=TRUE,value.var="Mean")
-write.table(x=summarizedData,file="RESULT_summarized_xtab.txt")
+runIt()
